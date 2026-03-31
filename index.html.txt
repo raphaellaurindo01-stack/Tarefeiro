@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Organizador de Tarefas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 0 16px;
+      background: #f5f5f5;
+    }
+    h1 {
+      text-align: center;
+    }
+    form {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    input[type="text"] {
+      flex: 1;
+      padding: 8px;
+    }
+    button {
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #fff;
+      padding: 8px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 4px;
+    }
+    .done {
+      text-decoration: line-through;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <h1>Minhas Tarefas</h1>
+
+  <form id="task-form">
+    <input type="text" id="task-input" placeholder="Digite uma tarefa..." required>
+    <button type="submit">Adicionar</button>
+  </form>
+
+  <ul id="task-list"></ul>
+
+  <script>
+    const form = document.getElementById('task-form');
+    const input = document.getElementById('task-input');
+    const list = document.getElementById('task-list');
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault(); // impede o recarregamento da página
+
+      const text = input.value.trim();
+      if (text === '') return;
+
+      const li = document.createElement('li');
+
+      const span = document.createElement('span');
+      span.textContent = text;
+
+      const buttons = document.createElement('div');
+
+      const doneBtn = document.createElement('button');
+      doneBtn.textContent = 'Concluir';
+      doneBtn.addEventListener('click', () => {
+        span.classList.toggle('done');
+      });
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = 'Excluir';
+      deleteBtn.addEventListener('click', () => {
+        li.remove();
+      });
+
+      buttons.appendChild(doneBtn);
+      buttons.appendChild(deleteBtn);
+
+      li.appendChild(span);
+      li.appendChild(buttons);
+      list.appendChild(li);
+
+      input.value = '';
+      input.focus();
+    });
+  </script>
+</body>
+</html>
